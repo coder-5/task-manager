@@ -202,7 +202,7 @@ public class TaskManager {
         boolean notEditied = true;
 
         if ( tasks.isEmpty()) {
-            System.out.println("There are no valid tasks to mark done.");
+            System.out.println("There are no valid tasks to edit.");
             return;
         }
 
@@ -242,6 +242,72 @@ public class TaskManager {
                         notEditied = false;
                         notConfirmed = false;
                         System.out.println("The task has been successfully edited");
+                    } else {
+                        continue Main_loop;
+                    }
+                } catch (InputMismatchException  e) {
+                    scanner.nextLine();
+                    System.out.println("That is invalid please try again");
+                }
+            }
+        }
+
+    }
+
+    public static void changePriority(Scanner scanner) {
+        boolean notConfirmed = true;
+        boolean taskPriorityNotChanged = true;
+
+        if ( tasks.isEmpty()) {
+            System.out.println("There are no valid tasks to change the priority of.");
+            return;
+        }
+
+        Main_loop:
+        while (taskPriorityNotChanged) {
+            showTasks();
+            System.out.print("Please enter the the task number you would like to change the priority of or 0 to cancel: ");
+            int taskToChangePriorityOf = 0;
+            if (scanner.hasNextInt()) {
+                taskToChangePriorityOf = scanner.nextInt() - 1;
+            } else {
+                scanner.nextLine();
+                System.out.println("The task number must me an integer.");
+                continue;
+            }
+
+            while (notConfirmed) {
+
+                if (taskToChangePriorityOf == -1) {
+                    return;
+                }
+
+
+                try {
+                    System.out.print("is the task you would like to change the priority of \"" + tasks.get(taskToChangePriorityOf) + "\" (true or false): ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("That task number is invalid.");
+                    continue Main_loop;
+                }
+
+
+                try {
+                    if (scanner.nextBoolean()) {
+                        scanner.nextLine();
+                        char newPriority = 0;
+                        while (newPriority == 0) {
+                            System.out.print("Please enter the new priority(h for high, m for medium, l for low, we only look at the first character): ");
+                            newPriority = scanner.nextLine().toLowerCase().charAt(0);
+
+                            if (newPriority != 'h' && newPriority != 'm' && newPriority != 'l') {
+                                System.out.println("That was and invalid priority");
+                                newPriority = 0;
+                            }
+                        }
+                        tasks.get(taskToChangePriorityOf).priority = newPriority;
+                        taskPriorityNotChanged = false;
+                        notConfirmed = false;
+                        System.out.println("The task has been successfully changed priority");
                     } else {
                         continue Main_loop;
                     }

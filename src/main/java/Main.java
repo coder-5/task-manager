@@ -14,8 +14,9 @@ public class Main {
             System.out.println("2. Remove a task");
             System.out.println("3. Show all current tasks");
             System.out.println("4. Mark a task done");
-            System.out.println("5. Edit an existing task\n");
-            System.out.print("Please pick an action (enter a number 1 - 5): ");
+            System.out.println("5. Edit an existing task");
+            System.out.println("6. Change the priority of an existing task");
+            System.out.print("\nPlease pick an action (enter a number 1 - 5): ");
 
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
@@ -42,6 +43,9 @@ public class Main {
                     break;
                 case 5:
                     TaskManager.editTask(scanner);
+                    break;
+                case 6:
+                    TaskManager.changePriority(scanner);
                     break;
                 default:
                     System.out.println("That is an invalid input.");
