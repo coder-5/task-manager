@@ -98,7 +98,7 @@ public class TaskManager {
         checkIfAnyNotDoneTasksExist = bigCount == 0;
 
 
-        if (!tasks.isEmpty() && checkIfAnyNotDoneTasksExist) {
+        if (!tasks.isEmpty() && !checkIfAnyNotDoneTasksExist) {
             System.out.println();
             int count = 1;
             for (Task i : tasks) {
@@ -123,7 +123,7 @@ public class TaskManager {
         checkIfAnyDoneTasksExist = bigCount == 0;
 
 
-        if (!tasks.isEmpty() && checkIfAnyDoneTasksExist) {
+        if (!tasks.isEmpty() && !checkIfAnyDoneTasksExist) {
             System.out.println();
             int count = 1;
             for (Task i : tasks) {
