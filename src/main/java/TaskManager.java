@@ -102,7 +102,7 @@ public class TaskManager {
             boolean notConfirmed = true;
 
             System.out.print("Please enter the the task number you would like to delete or 0 to cancel: ");
-            int taskToRemove = 0;
+            int taskToRemove;
             if (scanner.hasNextInt()) {
                 taskToRemove = scanner.nextInt() - 1;
             } else {
@@ -156,7 +156,7 @@ public class TaskManager {
         while (notMarkedDone) {
             showTasks();
             System.out.print("Please enter the the task number you would like to mark done or 0 to cancel: ");
-            int taskToMarkDone = 0;
+            int taskToMarkDone;
             if (scanner.hasNextInt()) {
                 taskToMarkDone = scanner.nextInt() - 1;
             } else {
@@ -210,7 +210,7 @@ public class TaskManager {
         while (notEditied) {
             showTasks();
             System.out.print("Please enter the the task number you would like to edit or 0 to cancel: ");
-            int taskToEdit = 0;
+            int taskToEdit;
             if (scanner.hasNextInt()) {
                 taskToEdit = scanner.nextInt() - 1;
             } else {
@@ -267,7 +267,7 @@ public class TaskManager {
         while (taskPriorityNotChanged) {
             showTasks();
             System.out.print("Please enter the the task number you would like to change the priority of or 0 to cancel: ");
-            int taskToChangePriorityOf = 0;
+            int taskToChangePriorityOf;
             if (scanner.hasNextInt()) {
                 taskToChangePriorityOf = scanner.nextInt() - 1;
             } else {
@@ -308,6 +308,60 @@ public class TaskManager {
                         taskPriorityNotChanged = false;
                         notConfirmed = false;
                         System.out.println("The task has been successfully changed priority");
+                    } else {
+                        continue Main_loop;
+                    }
+                } catch (InputMismatchException  e) {
+                    scanner.nextLine();
+                    System.out.println("That is invalid please try again");
+                }
+            }
+        }
+
+    }
+
+    public static void markTaskIncomplete(Scanner scanner) {
+        boolean notConfirmed = true;
+        boolean notMarkedIncomplete = true;
+
+        if ( tasks.isEmpty()) {
+            System.out.println("There are no valid tasks to mark incomplete.");
+            return;
+        }
+
+        Main_loop:
+        while (notMarkedIncomplete) {
+            showTasks();
+            System.out.print("Please enter the the task number you would like to mark incomplete or 0 to cancel: ");
+            int taskToMarkIncomplete;
+            if (scanner.hasNextInt()) {
+                taskToMarkIncomplete = scanner.nextInt() - 1;
+            } else {
+                scanner.nextLine();
+                System.out.println("The task number must me an integer.");
+                continue;
+            }
+
+            while (notConfirmed) {
+
+                if (taskToMarkIncomplete == -1) {
+                    return;
+                }
+
+
+                try {
+                    System.out.print("is the task you would like to mark incomplete \"" + tasks.get(taskToMarkIncomplete) + "\" (true or false): ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("That task number is invalid.");
+                    continue Main_loop;
+                }
+
+                try {
+                    if (scanner.nextBoolean()) {
+                        tasks.get(taskToMarkIncomplete).done = false;
+                        notMarkedIncomplete = false;
+                        notConfirmed = false;
+                        System.out.println("The task has been successfully marked incomplete");
                     } else {
                         continue Main_loop;
                     }
