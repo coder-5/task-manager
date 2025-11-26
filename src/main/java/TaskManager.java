@@ -112,6 +112,31 @@ public class TaskManager {
             System.out.println("\n there are no available tasks.\n");
         }
     }
+    public static void showCompleteTasks() {
+        boolean checkIfAnyDoneTasksExist;
+        int bigCount = 0;
+        for (Task i : tasks) {
+            if (i.done) {
+                bigCount++;
+            }
+        }
+        checkIfAnyDoneTasksExist = bigCount == 0;
+
+
+        if (!tasks.isEmpty() && checkIfAnyDoneTasksExist) {
+            System.out.println();
+            int count = 1;
+            for (Task i : tasks) {
+                if (i.done) {
+                    System.out.println(count + ". " + i);
+                    count++;
+                }
+            }
+            System.out.println();
+        } else {
+            System.out.println("\n there are no available tasks.\n");
+        }
+    }
 
     public static void removeTask(Scanner scanner) {
         boolean notDeleted = true;
