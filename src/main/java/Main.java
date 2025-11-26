@@ -7,15 +7,15 @@ void main() {
 
     main_loop:
     while (true) {
-        IO.println("0. exit");
-        IO.println("\n1. Add a task");
-        IO.println("2. Remove a task");
-        IO.println("3. Show all current tasks");
-        IO.println("4. Mark a task done");
-        IO.println("5. Edit an existing task");
-        IO.println("6. Change the priority of an existing task");
-        IO.println("7. Mark a task incomplete");
-        IO.print("\nPlease pick an action (enter a number 0 - 7): ");
+        System.out.println("0. exit");
+        System.out.println("\n1. Add a task");
+        System.out.println("2. Remove a task");
+        System.out.println("3. Show all current tasks");
+        System.out.println("4. Mark a task done");
+        System.out.println("5. Edit an existing task");
+        System.out.println("6. Change the priority of an existing task");
+        System.out.println("7. Mark a task incomplete");
+        System.out.print("\nPlease pick an action (enter a number 0 - 7): ");
 
         if (scanner.hasNextInt()) {
             input = scanner.nextInt();
@@ -52,7 +52,7 @@ void main() {
                 TaskManager.markTaskIncomplete(scanner);
                 break;
             default:
-                IO.println("That is an invalid input.");
+                System.out.println("That is an invalid input.");
         }
     }
 }
