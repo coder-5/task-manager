@@ -1,0 +1,256 @@
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class TaskManager {
+    static ArrayList<Task> tasks = new ArrayList<>();
+
+    public static void addTask(Scanner scanner) {
+        boolean keepGoing = true;
+        String taskName = "";
+        boolean done = false;
+        boolean taskMade = false;
+        char priority = 0;
+        boolean taskConfirmed = false;
+        Main_loop:
+        while (keepGoing){
+            while (!taskMade) {
+                System.out.print("Please enter the task: ");
+                taskName = scanner.nextLine();
+                taskMade = true;
+            }
+            while (!taskConfirmed) {
+                if (taskName.isEmpty() || taskName.equals("\n")) {
+                    System.out.println("The was no input, please try again.");
+                    taskMade = false;
+                    continue Main_loop;
+                } else {
+                    System.out.print("Is the task \"" + taskName + "\" (true or false): ");
+                    if (scanner.hasNextBoolean()) {
+                        if (scanner.nextBoolean()) {
+                            scanner.nextLine();
+                            taskConfirmed = true;
+                        } else {
+                            scanner.nextLine();
+                            taskMade = false;
+                            continue Main_loop;
+                        }
+                    } else {
+                        scanner.nextLine();
+                        System.out.println("That was invalid, please try again");
+                    }
+                }
+            }
+
+            if (priority == 0) {
+                System.out.print("Please enter the priority(h for high, m for medium, l for low, we only look at the first character): ");
+                String priorityString = scanner.nextLine();
+                if (!priorityString.isEmpty()) {
+                    priorityString = priorityString.toLowerCase();
+                    priority = priorityString.charAt(0);
+                    if (priority != 'h' && priority != 'm' && priority != 'l') {
+                        System.out.println("The input's first character needs to be h, or m, or l");
+                        priority = 0;
+                        continue;
+                    }
+                } else {
+                    System.out.println("you did not enter anything.");
+                    continue;
+                }
+            }
+
+            System.out.print("Please enter if it is done or not(true or false): ");
+            if (scanner.hasNextBoolean()) {
+                done = scanner.nextBoolean();
+                keepGoing = false;
+            } else {
+                scanner.nextLine();
+                System.out.println("Please enter true or false");
+            }
+        }
+
+        Task task = new Task(taskName, done, priority);
+
+        tasks.add(task);
+    }
+
+    public static void showTasks() {
+        if (!tasks.isEmpty()) {
+            System.out.println();
+            int count = 1;
+            for (Task i : tasks) {
+                System.out.println(count + ". " + i);
+                count++;
+            }
+            System.out.println();
+        } else {
+            System.out.println("\n there are no available tasks.\n");
+        }
+    }
+
+    public static void removeTask(Scanner scanner) {
+        boolean notDeleted = true;
+
+        Main_loop:
+        while (notDeleted) {
+            showTasks();
+
+
+            if ( tasks.isEmpty()) {
+                break;
+            }
+            boolean notConfirmed = true;
+
+            System.out.print("Please enter the the task number you would like to delete or 0 to cancel: ");
+            int taskToRemove = 0;
+            if (scanner.hasNextInt()) {
+                taskToRemove = scanner.nextInt() - 1;
+            } else {
+                scanner.nextLine();
+                System.out.println("The task number must me an integer.");
+                continue;
+            }
+
+            while (notConfirmed) {
+
+                if (taskToRemove == -1) {
+                    break Main_loop;
+                }
+
+
+                try {
+                    System.out.print("is the task you would like to delete \"" + tasks.get(taskToRemove) + "\" (true or false): ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("That task number is invalid.");
+                    continue Main_loop;
+                }
+
+                try {
+                    if (scanner.nextBoolean()) {
+                        tasks.remove(taskToRemove);
+                        notDeleted = false;
+                        notConfirmed = false;
+                        System.out.println("The task has been successfully deleted");
+                    } else {
+                        continue Main_loop;
+                    }
+                } catch (InputMismatchException  e) {
+                    scanner.nextLine();
+                    System.out.println("That is invalid please try again");
+                }
+            }
+        }
+
+    }
+
+    public static void markDone(Scanner scanner) {
+        boolean notConfirmed = true;
+        boolean notMarkedDone = true;
+
+        if ( tasks.isEmpty()) {
+            System.out.println("There are no valid tasks to mark done.");
+            return;
+        }
+
+        Main_loop:
+        while (notMarkedDone) {
+            showTasks();
+            System.out.print("Please enter the the task number you would like to mark done or 0 to cancel: ");
+            int taskToMarkDone = 0;
+            if (scanner.hasNextInt()) {
+                taskToMarkDone = scanner.nextInt() - 1;
+            } else {
+                scanner.nextLine();
+                System.out.println("The task number must me an integer.");
+                continue;
+            }
+
+            while (notConfirmed) {
+
+                if (taskToMarkDone == -1) {
+                    return;
+                }
+
+
+                try {
+                    System.out.print("is the task you would like to mark done \"" + tasks.get(taskToMarkDone) + "\" (true or false): ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("That task number is invalid.");
+                    continue Main_loop;
+                }
+
+                try {
+                    if (scanner.nextBoolean()) {
+                        tasks.get(taskToMarkDone).done = true;
+                        notMarkedDone = false;
+                        notConfirmed = false;
+                        System.out.println("The task has been successfully marked done");
+                    } else {
+                        continue Main_loop;
+                    }
+                } catch (InputMismatchException  e) {
+                    scanner.nextLine();
+                    System.out.println("That is invalid please try again");
+                }
+            }
+        }
+
+    }
+
+    public static void editTask(Scanner scanner) {
+        boolean notConfirmed = true;
+        boolean notEditied = true;
+
+        if ( tasks.isEmpty()) {
+            System.out.println("There are no valid tasks to mark done.");
+            return;
+        }
+
+        Main_loop:
+        while (notEditied) {
+            showTasks();
+            System.out.print("Please enter the the task number you would like to edit or 0 to cancel: ");
+            int taskToEdit = 0;
+            if (scanner.hasNextInt()) {
+                taskToEdit = scanner.nextInt() - 1;
+            } else {
+                scanner.nextLine();
+                System.out.println("The task number must me an integer.");
+                continue;
+            }
+
+            while (notConfirmed) {
+
+                if (taskToEdit == -1) {
+                    return;
+                }
+
+
+                try {
+                    System.out.print("is the task you would like to edit \"" + tasks.get(taskToEdit) + "\" (true or false): ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("That task number is invalid.");
+                    continue Main_loop;
+                }
+
+
+                try {
+                    if (scanner.nextBoolean()) {
+                        scanner.nextLine();
+                        System.out.print("Please enter the new text for the task: ");
+                        tasks.get(taskToEdit).task = scanner.nextLine();
+                        notEditied = false;
+                        notConfirmed = false;
+                        System.out.println("The task has been successfully edited");
+                    } else {
+                        continue Main_loop;
+                    }
+                } catch (InputMismatchException  e) {
+                    scanner.nextLine();
+                    System.out.println("That is invalid please try again");
+                }
+            }
+        }
+
+    }
+}
