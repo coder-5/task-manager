@@ -423,4 +423,9 @@ public class TaskManager {
         }
 
     }
+
+    public static void deleteAllCompletedTasks() {
+        tasks.removeIf(i -> i.done);
+        System.out.println("All Completed tasks have been deleted.");
+    }
 }

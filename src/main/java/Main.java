@@ -3,7 +3,7 @@ import java.util.Scanner;
 void main() {
 
     Scanner scanner = new Scanner(System.in);
-    int input;
+    int choice;
 
     main_loop:
     while (true) {
@@ -17,19 +17,20 @@ void main() {
         System.out.println("7. Mark a task incomplete");
         System.out.println("8. Show only incomplete tasks");
         System.out.println("9. Show only complete tasks");
-        System.out.print("\nPlease pick an action (enter a number 0 - 9): ");
+        System.out.println("10. Show only complete tasks");
+        System.out.print("\nPlease pick an action (enter a number 0 - 10): ");
 
         if (scanner.hasNextInt()) {
-            input = scanner.nextInt();
+            choice = scanner.nextInt();
             scanner.nextLine();
         } else {
-            IO.println("\nThat is an invalid input.");
+            System.out.println("\nThat is an invalid input.");
             scanner.nextLine();
             continue;
         }
 
 
-        switch (input) {
+        switch (choice) {
             case 0:
                 System.out.println("Thank You for using the task manager, see you soon");
                 break main_loop;
@@ -59,6 +60,9 @@ void main() {
                 break;
             case 9:
                 TaskManager.showCompleteTasks();
+                break;
+            case 10:
+                TaskManager.deleteAllCompletedTasks();
                 break;
             default:
                 System.out.println("That is an invalid input.");
