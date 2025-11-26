@@ -31,6 +31,7 @@ void main() {
 
         switch (input) {
             case 0:
+                System.out.println("Thank You for using the task manager, see you soon");
                 break main_loop;
             case 1:
                 TaskManager.addTask(scanner);
