@@ -473,4 +473,26 @@ public class TaskManager {
             }
         }
     }
+
+    public static void deleteAllTasks(Scanner scanner) {
+        boolean done  = false;
+        System.out.print("Are you sure(true or false): ");
+
+        while (!done) {
+            if (scanner.hasNextBoolean()) {
+                if (scanner.nextBoolean()) {
+                    scanner.nextLine();
+                    tasks.clear();
+                    done = true;
+                    System.out.println("All Completed tasks have been deleted.");
+                }
+                else {
+                    return;
+                }
+            } else {
+                scanner.nextLine();
+                System.out.println("Please enter true or false: ");
+            }
+        }
+    }
 }

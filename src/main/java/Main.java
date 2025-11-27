@@ -20,7 +20,8 @@ void main() {
         System.out.println("6. Change the priority of an existing task");
         System.out.println("7. Mark a task incomplete");
         System.out.println("8. Delete all complete tasks");
-        System.out.print("\nPlease pick an action (enter a number 0 - 8): ");
+        System.out.println("9. clear all tasks");
+        System.out.print("\nPlease pick an action (enter a number 0 - 9): ");
 
         if (scanner.hasNextInt()) {
             choice = scanner.nextInt();
@@ -92,6 +93,9 @@ void main() {
                 break;
             case 8:
                 TaskManager.deleteAllCompletedTasks(scanner);
+                break;
+            case 9:
+                TaskManager.deleteAllTasks(scanner);
                 break;
             default:
                 System.out.println("That is an invalid input.");
