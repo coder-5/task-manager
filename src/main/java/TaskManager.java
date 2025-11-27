@@ -79,7 +79,8 @@ public class TaskManager {
         tasks.add(task);
     }
 
-    public static void showTasks() {
+    public static void showTasks(Scanner scanner) {
+
         if (!tasks.isEmpty()) {
             System.out.println();
             int count = 1;
@@ -91,8 +92,13 @@ public class TaskManager {
         } else {
             System.out.println("\n there are no available tasks.\n");
         }
+
+        System.out.print("Enter anything to continue: ");
+
+        scanner.nextLine();
+
     }
-    public static void showIncompleteTasks() {
+    public static void showIncompleteTasks(Scanner scanner) {
         boolean checkIfAnyNotDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
@@ -116,8 +122,12 @@ public class TaskManager {
         } else {
             System.out.println("\n there are no available tasks.\n");
         }
+
+        System.out.print("Enter anything to continue: ");
+
+        scanner.nextLine();
     }
-    public static void showCompleteTasks() {
+    public static void showCompleteTasks(Scanner scanner) {
         boolean checkIfAnyDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
@@ -139,8 +149,12 @@ public class TaskManager {
             }
             System.out.println();
         } else {
-            System.out.println("\n there are no available tasks.\n");
+            System.out.print("\n there are no available tasks.\n");
         }
+
+        System.out.print("Enter anything to continue: ");
+
+        scanner.nextLine();
     }
 
     public static void removeTask(Scanner scanner) {
@@ -148,7 +162,7 @@ public class TaskManager {
 
         Main_loop:
         while (notDeleted) {
-            showTasks();
+            showTasks(scanner);
 
 
             if ( tasks.isEmpty()) {
@@ -209,7 +223,7 @@ public class TaskManager {
 
         Main_loop:
         while (notMarkedDone) {
-            showTasks();
+            showTasks(scanner);
             System.out.print("Please enter the the task number you would like to mark done or 0 to cancel: ");
             int taskToMarkDone;
             if (scanner.hasNextInt()) {
@@ -263,7 +277,7 @@ public class TaskManager {
 
         Main_loop:
         while (notEditied) {
-            showTasks();
+            showTasks(scanner);
             System.out.print("Please enter the the task number you would like to edit or 0 to cancel: ");
             int taskToEdit;
             if (scanner.hasNextInt()) {
@@ -320,7 +334,7 @@ public class TaskManager {
 
         Main_loop:
         while (taskPriorityNotChanged) {
-            showTasks();
+            showTasks(scanner);
             System.out.print("Please enter the the task number you would like to change the priority of or 0 to cancel: ");
             int taskToChangePriorityOf;
             if (scanner.hasNextInt()) {
@@ -386,7 +400,7 @@ public class TaskManager {
 
         Main_loop:
         while (notMarkedIncomplete) {
-            showTasks();
+            showTasks(scanner);
             System.out.print("Please enter the the task number you would like to mark incomplete or 0 to cancel: ");
             int taskToMarkIncomplete;
             if (scanner.hasNextInt()) {

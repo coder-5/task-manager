@@ -52,13 +52,13 @@ void main() {
                     case 0:
                         continue;
                     case 1:
-                        TaskManager.showTasks();
+                        TaskManager.showTasks(scanner);
                         continue;
                     case 2:
-                        TaskManager.showIncompleteTasks();
+                        TaskManager.showIncompleteTasks(scanner);
                         continue;
                     case 3:
-                        TaskManager.showCompleteTasks();
+                        TaskManager.showCompleteTasks(scanner);
                         continue;
                     default:
                         System.out.println("That is an invalid input.");
