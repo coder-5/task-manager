@@ -45,18 +45,19 @@ void main() {
                 System.out.println("3. Show complete tasks");
                 System.out.print("\nPlease pick an action (enter a number 0 - 3): ");
                 choice = scanner.nextInt();
+                scanner.nextLine();
                 switch (choice) {
                     case 0:
-                        break;
+                        continue;
                     case 1:
                         TaskManager.showTasks();
-                        break;
+                        continue;
                     case 2:
                         TaskManager.showIncompleteTasks();
-                        break;
+                        continue;
                     case 3:
                         TaskManager.showCompleteTasks();
-                        break;
+                        continue;
                     default:
                         System.out.println("That is an invalid input.");
                         continue;
