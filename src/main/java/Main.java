@@ -5,6 +5,8 @@ void main() {
     Scanner scanner = new Scanner(System.in);
     int choice;
 
+    System.out.println("Welcome to the task manager!");
+
     main_loop:
     while (true) {
         System.out.println("\n0. exit");
