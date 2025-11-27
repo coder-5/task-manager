@@ -484,7 +484,7 @@ public class TaskManager {
                     scanner.nextLine();
                     tasks.clear();
                     done = true;
-                    System.out.println("All Completed tasks have been deleted.");
+                    System.out.println("All tasks have been deleted.");
                 }
                 else {
                     return;
