@@ -77,9 +77,12 @@ public class TaskManager {
         Task task = new Task(taskName, done, priority);
 
         tasks.add(task);
+        // Keep tasks list in natural order defined by Task.compareTo
+        tasks.sort(null);
     }
 
     public static void showTasks(Scanner scanner) {
+        tasks.sort(null);
 
         if (!tasks.isEmpty()) {
             System.out.println();
@@ -100,6 +103,8 @@ public class TaskManager {
     }
 
     public static void showOnlyCompleteOrIncomplete(Scanner scanner, boolean status)  {
+        tasks.sort(null);
+
         boolean checkIfAnyNotDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
@@ -130,6 +135,8 @@ public class TaskManager {
     }
 
     public static void showCertainPriorityTasks(Scanner scanner, char letter) {
+        tasks.sort(null);
+
         boolean checkIfAnyHighPriorityTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
