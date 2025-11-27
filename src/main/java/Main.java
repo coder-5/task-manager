@@ -45,7 +45,10 @@ void main() {
                 System.out.println("1. Show all tasks");
                 System.out.println("2. Show incomplete tasks");
                 System.out.println("3. Show complete tasks");
-                System.out.print("\nPlease pick an action (enter a number 0 - 3): ");
+                System.out.println("4. Show high priority tasks");
+                System.out.println("5. Show medium priority tasks");
+                System.out.println("6. Show low priority tasks");
+                System.out.print("\nPlease pick an action (enter a number 0 - 6): ");
                 choice = scanner.nextInt();
                 scanner.nextLine();
                 switch (choice) {
@@ -55,10 +58,19 @@ void main() {
                         TaskManager.showTasks(scanner);
                         continue;
                     case 2:
-                        TaskManager.showIncompleteTasks(scanner);
+                        TaskManager.showOnlyCompleteOrIncomplete(scanner, false);
                         continue;
                     case 3:
-                        TaskManager.showCompleteTasks(scanner);
+                        TaskManager.showOnlyCompleteOrIncomplete(scanner, true);
+                        continue;
+                    case 4:
+                        TaskManager.showCertainPriorityTasks(scanner, 'h');
+                        continue;
+                    case 5:
+                        TaskManager.showCertainPriorityTasks(scanner, 'm');
+                        continue;
+                    case 6:
+                        TaskManager.showCertainPriorityTasks(scanner, 'l');
                         continue;
                     default:
                         System.out.println("That is an invalid input.");

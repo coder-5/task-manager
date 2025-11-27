@@ -6,7 +6,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>task-manager</artifactId>
-    <version>7</version>
+    <version>8</version>
     <name>Task Manager</name>
     <build>
         <plugins>

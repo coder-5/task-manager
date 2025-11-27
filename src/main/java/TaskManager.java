@@ -98,11 +98,12 @@ public class TaskManager {
         scanner.nextLine();
 
     }
-    public static void showIncompleteTasks(Scanner scanner) {
+
+    public static void showOnlyCompleteOrIncomplete(Scanner scanner, boolean status) {
         boolean checkIfAnyNotDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
-            if (!i.done) {
+            if (i.done == status) {
                 bigCount++;
             }
         }
@@ -113,7 +114,7 @@ public class TaskManager {
             System.out.println();
             int count = 1;
             for (Task i : tasks) {
-                if (!i.done) {
+                if (i.done == status) {
                     System.out.println(count + ". " + i);
                     count++;
                 }
@@ -127,22 +128,23 @@ public class TaskManager {
 
         scanner.nextLine();
     }
-    public static void showCompleteTasks(Scanner scanner) {
-        boolean checkIfAnyDoneTasksExist;
+
+    public static void showCertainPriorityTasks(Scanner scanner, char letter) {
+        boolean checkIfAnyHighPriorityTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
-            if (i.done) {
+            if (i.priority == letter) {
                 bigCount++;
             }
         }
-        checkIfAnyDoneTasksExist = bigCount == 0;
+        checkIfAnyHighPriorityTasksExist = bigCount == 0;
 
 
-        if (!tasks.isEmpty() && !checkIfAnyDoneTasksExist) {
+        if (!tasks.isEmpty() && !checkIfAnyHighPriorityTasksExist) {
             System.out.println();
             int count = 1;
             for (Task i : tasks) {
-                if (i.done) {
+                if (i.priority == letter) {
                     System.out.println(count + ". " + i);
                     count++;
                 }
