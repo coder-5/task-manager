@@ -99,7 +99,7 @@ public class TaskManager {
 
     }
 
-    public static void showOnlyCompleteOrIncomplete(Scanner scanner, boolean status) {
+    public static void showOnlyCompleteOrIncomplete(Scanner scanner, boolean status)  {
         boolean checkIfAnyNotDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
