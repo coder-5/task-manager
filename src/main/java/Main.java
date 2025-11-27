@@ -75,7 +75,7 @@ void main() {
                 TaskManager.markTaskIncomplete(scanner);
                 break;
             case 8:
-                TaskManager.deleteAllCompletedTasks();
+                TaskManager.deleteAllCompletedTasks(scanner);
                 break;
             default:
                 System.out.println("That is an invalid input.");

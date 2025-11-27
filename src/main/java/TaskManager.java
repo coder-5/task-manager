@@ -429,8 +429,25 @@ public class TaskManager {
 
     }
 
-    public static void deleteAllCompletedTasks() {
-        tasks.removeIf(i -> i.done);
-        System.out.println("All Completed tasks have been deleted.");
+    public static void deleteAllCompletedTasks(Scanner scanner) {
+        boolean done  = false;
+        System.out.print("Are you sure(true or false): ");
+
+        while (!done) {
+            if (scanner.hasNextBoolean()) {
+                if (scanner.nextBoolean()) {
+                    scanner.nextLine();
+                    tasks.removeIf(i -> i.done);
+                    done = true;
+                    System.out.println("All Completed tasks have been deleted.");
+                }
+                else {
+                    return;
+                }
+            } else {
+                scanner.nextLine();
+                System.out.println("Please enter true or false: ");
+            }
+        }
     }
 }
