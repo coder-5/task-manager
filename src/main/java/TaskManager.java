@@ -15,10 +15,15 @@ public class TaskManager {
         Main_loop:
         while (keepGoing){
             while (!taskMade) {
-                System.out.print("Please enter the task: ");
+                System.out.print("Please enter the task or enter \"CANCEL\" to cancel: ");
                 taskName = scanner.nextLine();
                 taskMade = true;
             }
+
+            if (taskName.equals("CANCEL")) {
+                return;
+            }
+
             while (!taskConfirmed) {
                 if (taskName.isEmpty() || taskName.equals("\n")) {
                     System.out.println("The was no input, please try again.");
