@@ -452,7 +452,7 @@ public class TaskManager {
 
     }
 
-    public static void deleteAllCompletedTasks(Scanner scanner) {
+    public static void deleteAllCompletedOrIncompleteTasks(Scanner scanner, boolean choice) {
         boolean done  = false;
         System.out.print("Are you sure(true or false): ");
 
@@ -460,7 +460,7 @@ public class TaskManager {
             if (scanner.hasNextBoolean()) {
                 if (scanner.nextBoolean()) {
                     scanner.nextLine();
-                    tasks.removeIf(i -> i.done);
+                    tasks.removeIf(i -> i.done == choice);
                     done = true;
                     System.out.println("All Completed tasks have been deleted.");
                 }

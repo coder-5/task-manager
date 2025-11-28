@@ -14,12 +14,12 @@ void main() {
         System.out.println("\n0. exit");
         System.out.println("1. Add a task");
         System.out.println("2. Remove a task");
-        System.out.println("3. Show tasks");
+        System.out.println("3. Show tasks(sub menu)");
         System.out.println("4. Mark a task done");
         System.out.println("5. Edit an existing task");
         System.out.println("6. Change the priority of an existing task");
         System.out.println("7. Mark a task incomplete");
-        System.out.println("8. Delete all complete tasks");
+        System.out.println("8. Mass Delete(sub menu)");
         System.out.println("9. clear all tasks");
         System.out.print("\nPlease pick an action (enter a number 0 - 9): ");
 
@@ -92,11 +92,29 @@ void main() {
                 TaskManager.markTaskIncomplete(scanner);
                 break;
             case 8:
-                TaskManager.deleteAllCompletedTasks(scanner);
-                break;
-            case 9:
-                TaskManager.deleteAllTasks(scanner);
-                break;
+                System.out.println("0. return to main menu");
+                System.out.println("1. Delete all complete tasks");
+                System.out.println("2. Delete all incomplete tasks");
+                System.out.println("3. Delete all tasks");
+                System.out.print("\nPlease pick an action (enter a number 0 - 3): ");
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        TaskManager.deleteAllCompletedOrIncompleteTasks(scanner, true);
+                        continue;
+                    case 2:
+                        TaskManager.deleteAllCompletedOrIncompleteTasks(scanner, false);
+                        continue;
+                    case 3:
+                        TaskManager.deleteAllTasks(scanner);
+                        continue;
+                    default:
+                        System.out.println("That is an invalid input.");
+                        continue;
+                }
             default:
                 System.out.println("That is an invalid input.");
                 break;

@@ -10,12 +10,12 @@ public class Task implements Comparable<Task> {
     }
 
     private static int priorityRank(char p) {
-        switch (Character.toLowerCase(p)) {
-            case 'h': return 0;
-            case 'm': return 1;
-            case 'l': return 2;
-            default:  return 3;
-        }
+        return switch (Character.toLowerCase(p)) {
+            case 'h' -> 0;
+            case 'm' -> 1;
+            case 'l' -> 2;
+            default -> 3;
+        };
     }
 
     @Override
