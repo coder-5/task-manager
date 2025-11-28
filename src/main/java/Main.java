@@ -20,8 +20,7 @@ void main() {
         System.out.println("6. Change the priority of an existing task");
         System.out.println("7. Mark a task incomplete");
         System.out.println("8. Mass Delete(sub menu)");
-        System.out.println("9. clear all tasks");
-        System.out.print("\nPlease pick an action (enter a number 0 - 9): ");
+        System.out.print("\nPlease pick an action (enter a number 0 - 8): ");
 
         if (scanner.hasNextInt()) {
             choice = scanner.nextInt();
