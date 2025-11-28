@@ -4,8 +4,7 @@ void main() {
 
     Scanner scanner = new Scanner(System.in);
     int choice;
-
-    scanner.useDelimiter(System.lineSeparator());
+    String[] choiceArray;
 
     System.out.println("Welcome to the task manager!");
 
@@ -24,11 +23,32 @@ void main() {
         System.out.print("\nPlease pick an action (enter a number 0 - 9): ");
 
         if (scanner.hasNextInt()) {
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choiceArray = scanner.nextLine().split(" ");
         } else {
             System.out.println("\nThat is an invalid input.");
             scanner.nextLine();
+            continue;
+        }
+        
+        if (choiceArray.length == 1) {
+            choice = Integer.parseInt(choiceArray[0]);
+        } else if (choiceArray.length == 3 && (choiceArray[1].equals("-") || choiceArray[1].equals("+"))) {
+            int choicePt1 = Integer.parseInt(choiceArray[0]);
+            int choicePt2;
+            try {
+                choicePt2 = Integer.parseInt(choiceArray[2]);
+            } catch (NumberFormatException e) {
+                System.out.println("\nThat is an invalid input.");
+                continue;
+            }
+
+            if (choiceArray[1].equals("-")) {
+                choice = choicePt1 - choicePt2;
+            } else {
+                choice = choicePt1 + choicePt2;
+            }
+        } else {
+            System.out.println("\nThat is an invalid input.");
             continue;
         }
 
