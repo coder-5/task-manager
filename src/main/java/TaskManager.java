@@ -126,7 +126,7 @@ public class TaskManager {
             }
             System.out.println();
         } else {
-            System.out.println("\n there are no available tasks.\n");
+            System.out.println("\n there are no tasks matching the given filter tasks.\n");
         }
 
         System.out.print("Enter anything to continue: ");
@@ -158,7 +158,7 @@ public class TaskManager {
             }
             System.out.println();
         } else {
-            System.out.print("\n there are no available tasks.\n");
+            System.out.print("\n there are no tasks matching the given filter tasks..\n");
         }
 
         System.out.print("Enter anything to continue: ");
