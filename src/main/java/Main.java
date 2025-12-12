@@ -71,7 +71,12 @@ void main() {
                 System.out.println("5. Show medium priority tasks");
                 System.out.println("6. Show low priority tasks");
                 System.out.print("\nPlease pick an action (enter a number 0 - 6): ");
-                choice = scanner.nextInt();
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                } else {
+                    System.out.println("That is invalid.");
+                    continue;
+                }
                 scanner.nextLine();
                 switch (choice) {
                     case 0:
@@ -116,7 +121,12 @@ void main() {
                 System.out.println("2. Delete all incomplete tasks");
                 System.out.println("3. Delete all tasks");
                 System.out.print("\nPlease pick an action (enter a number 0 - 3): ");
-                choice = scanner.nextInt();
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                } else {
+                    System.out.println("That is invalid.");
+                    continue;
+                }
                 scanner.nextLine();
                 switch (choice) {
                     case 0:
