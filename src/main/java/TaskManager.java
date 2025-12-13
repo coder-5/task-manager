@@ -380,6 +380,7 @@ public class TaskManager {
 
                             if (newPriorityS.isEmpty()) {
                                 System.out.println("That was and invalid priority");
+                                continue;
                             }
 
                             newPriority = newPriorityS.toLowerCase().charAt(0);
