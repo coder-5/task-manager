@@ -3,8 +3,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TaskManager {
+    // The main list that holds all Task objects
     static ArrayList<Task> tasks = new ArrayList<>();
 
+    // Logic to create and add a new task
     public static void addTask(Scanner scanner) {
         boolean keepGoing = true;
         String taskName = "";
@@ -12,50 +14,58 @@ public class TaskManager {
         boolean taskMade = false;
         char priority = 0;
         boolean taskConfirmed = false;
+
+        // Main_loop label allows breaking/continuing the outer loop from inside nested structures
         Main_loop:
         while (keepGoing){
+
+            // Loop until a valid task name is entered
             while (!taskMade) {
                 System.out.print("Please enter the task or enter \"CANCEL\" to cancel: ");
                 taskName = scanner.nextLine();
                 taskMade = true;
             }
 
+            // Allow user to abort creation
             if (taskName.equals("CANCEL")) {
                 return;
             }
 
+            // Confirm the input is correct
             while (!taskConfirmed) {
                 if (taskName.isEmpty() || taskName.equals("\n")) {
                     System.out.println("The was no input, please try again.");
                     taskMade = false;
-                    continue Main_loop;
+                    continue Main_loop; // Restart outer loop to get name again
                 } else {
                     System.out.print("Is the task \"" + taskName + "\" (true or false): ");
                     if (scanner.hasNextBoolean()) {
                         if (scanner.nextBoolean()) {
-                            scanner.nextLine();
+                            scanner.nextLine(); // Consume newline
                             taskConfirmed = true;
                         } else {
-                            scanner.nextLine();
+                            scanner.nextLine(); // Consume newline
                             taskMade = false;
-                            continue Main_loop;
+                            continue Main_loop; // Restart if user says false
                         }
                     } else {
-                        scanner.nextLine();
+                        scanner.nextLine(); // Clear invalid input
                         System.out.println("That was invalid, please try again");
                     }
                 }
             }
 
+            // Get Priority (High, Medium, Low)
             if (priority == 0) {
                 System.out.print("Please enter the priority(h for high, m for medium, l for low, we only look at the first character): ");
                 String priorityString = scanner.nextLine();
                 if (!priorityString.isEmpty()) {
                     priorityString = priorityString.toLowerCase();
                     priority = priorityString.charAt(0);
+                    // Validate specific characters
                     if (priority != 'h' && priority != 'm' && priority != 'l') {
                         System.out.println("The input's first character needs to be h, or m, or l");
-                        priority = 0;
+                        priority = 0; // Reset to loop again
                         continue;
                     }
                 } else {
@@ -64,30 +74,34 @@ public class TaskManager {
                 }
             }
 
+            // Get Completion status
             System.out.print("Please enter if it is done or not(true or false): ");
             if (scanner.hasNextBoolean()) {
                 done = scanner.nextBoolean();
-                scanner.nextLine();
-                keepGoing = false;
+                scanner.nextLine(); // Consume newline
+                keepGoing = false; // Exit main loop, we have all data
             } else {
-                scanner.nextLine();
+                scanner.nextLine(); // Clear invalid input
                 System.out.println("Please enter true or false");
             }
         }
 
+        // Create the object and add to list
         Task task = new Task(taskName, done, priority);
-
         tasks.add(task);
-        // Keep tasks list in natural order defined by Task.compareTo
+
+        // Sort immediately to keep the list organized based on Task.compareTo rules
         tasks.sort(null);
     }
 
+    // Displays all tasks
     public static void showTasks(Scanner scanner) {
-        tasks.sort(null);
+        tasks.sort(null); // Ensure list is sorted before showing
 
         if (!tasks.isEmpty()) {
             System.out.println();
             int count = 1;
+            // Iterate and print with numbering (1. Task...)
             for (Task i : tasks) {
                 System.out.println(count + ". " + i);
                 count++;
@@ -98,14 +112,14 @@ public class TaskManager {
         }
 
         System.out.print("Enter anything to continue: ");
-
-        scanner.nextLine();
-
+        scanner.nextLine(); // Pause for user
     }
 
+    // Filtered display: Show only completed OR incomplete tasks
     public static void showOnlyCompleteOrIncomplete(Scanner scanner, boolean status)  {
         tasks.sort(null);
 
+        // Check if any tasks match the filter before printing headers
         boolean checkIfAnyNotDoneTasksExist;
         int bigCount = 0;
         for (Task i : tasks) {
@@ -131,10 +145,10 @@ public class TaskManager {
         }
 
         System.out.print("Enter anything to continue: ");
-
         scanner.nextLine();
     }
 
+    // Filtered display: Show only tasks of a specific priority
     public static void showCertainPriorityTasks(Scanner scanner, char letter) {
         tasks.sort(null);
 
@@ -146,7 +160,6 @@ public class TaskManager {
             }
         }
         checkIfAnyHighPriorityTasksExist = bigCount == 0;
-
 
         if (!tasks.isEmpty() && !checkIfAnyHighPriorityTasksExist) {
             System.out.println();
@@ -163,19 +176,18 @@ public class TaskManager {
         }
 
         System.out.print("Enter anything to continue: ");
-
         scanner.nextLine();
     }
 
+    // Deletes a specific task by index
     public static void removeTask(Scanner scanner) {
         boolean notDeleted = true;
 
         Main_loop:
         while (notDeleted) {
-            showTasks(scanner);
+            showTasks(scanner); // Show list so user knows indices
 
-
-            if ( tasks.isEmpty()) {
+            if (tasks.isEmpty()) {
                 break;
             }
             boolean notConfirmed = true;
@@ -183,7 +195,7 @@ public class TaskManager {
             System.out.print("Please enter the the task number you would like to delete or 0 to cancel: ");
             int taskToRemove;
             if (scanner.hasNextInt()) {
-                taskToRemove = scanner.nextInt() - 1;
+                taskToRemove = scanner.nextInt() - 1; // Convert 1-based user input to 0-based index
             } else {
                 scanner.nextLine();
                 System.out.println("The task number must me an integer.");
@@ -191,13 +203,12 @@ public class TaskManager {
             }
 
             while (notConfirmed) {
-
-                if (taskToRemove == -1) {
+                if (taskToRemove == -1) { // User entered 0
                     break Main_loop;
                 }
 
-
                 try {
+                    // Confirm with user before deleting
                     System.out.print("is the task you would like to delete \"" + tasks.get(taskToRemove) + "\" (true or false): ");
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("That task number is invalid.");
@@ -207,11 +218,11 @@ public class TaskManager {
                 try {
                     if (scanner.nextBoolean()) {
                         tasks.remove(taskToRemove);
-                        notDeleted = false;
+                        notDeleted = false; // Exit loops
                         notConfirmed = false;
                         System.out.println("The task has been successfully deleted");
                     } else {
-                        continue Main_loop;
+                        continue Main_loop; // User said false, restart
                     }
                 } catch (InputMismatchException  e) {
                     scanner.nextLine();
@@ -219,14 +230,14 @@ public class TaskManager {
                 }
             }
         }
-
     }
 
+    // Marks a specific task as Done (true)
     public static void markDone(Scanner scanner) {
         boolean notConfirmed = true;
         boolean notMarkedDone = true;
 
-        if ( tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There are no valid tasks to mark done.");
             return;
         }
@@ -245,11 +256,9 @@ public class TaskManager {
             }
 
             while (notConfirmed) {
-
                 if (taskToMarkDone == -1) {
                     return;
                 }
-
 
                 try {
                     System.out.print("is the task you would like to mark done \"" + tasks.get(taskToMarkDone) + "\" (true or false): ");
@@ -260,7 +269,7 @@ public class TaskManager {
 
                 try {
                     if (scanner.nextBoolean()) {
-                        tasks.get(taskToMarkDone).done = true;
+                        tasks.get(taskToMarkDone).done = true; // Update status
                         notMarkedDone = false;
                         notConfirmed = false;
                         System.out.println("The task has been successfully marked done");
@@ -273,14 +282,14 @@ public class TaskManager {
                 }
             }
         }
-
     }
 
+    // Updates the text name of an existing task
     public static void editTask(Scanner scanner) {
         boolean notConfirmed = true;
         boolean notEditied = true;
 
-        if ( tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There are no valid tasks to edit.");
             return;
         }
@@ -299,11 +308,9 @@ public class TaskManager {
             }
 
             while (notConfirmed) {
-
                 if (taskToEdit == -1) {
                     return;
                 }
-
 
                 try {
                     System.out.print("is the task you would like to edit \"" + tasks.get(taskToEdit) + "\" (true or false): ");
@@ -317,7 +324,7 @@ public class TaskManager {
                     if (scanner.nextBoolean()) {
                         scanner.nextLine();
                         System.out.print("Please enter the new text for the task: ");
-                        tasks.get(taskToEdit).task = scanner.nextLine();
+                        tasks.get(taskToEdit).task = scanner.nextLine(); // Update Name
                         notEditied = false;
                         notConfirmed = false;
                         System.out.println("The task has been successfully edited");
@@ -330,14 +337,14 @@ public class TaskManager {
                 }
             }
         }
-
     }
 
+    // Updates the priority char of an existing task
     public static void changePriority(Scanner scanner) {
         boolean notConfirmed = true;
         boolean taskPriorityNotChanged = true;
 
-        if ( tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There are no valid tasks to change the priority of.");
             return;
         }
@@ -356,11 +363,9 @@ public class TaskManager {
             }
 
             while (notConfirmed) {
-
                 if (taskToChangePriorityOf == -1) {
                     return;
                 }
-
 
                 try {
                     System.out.print("is the task you would like to change the priority of \"" + tasks.get(taskToChangePriorityOf) + "\" (true or false): ");
@@ -374,6 +379,7 @@ public class TaskManager {
                     if (scanner.nextBoolean()) {
                         scanner.nextLine();
                         char newPriority = 0;
+                        // Loop to ensure new priority is valid (h/m/l)
                         while (newPriority == 0) {
                             System.out.print("Please enter the new priority(h for high, m for medium, l for low, we only look at the first character): ");
                             String newPriorityS = scanner.nextLine();
@@ -403,14 +409,14 @@ public class TaskManager {
                 }
             }
         }
-
     }
 
+    // Marks a task as Incomplete (false)
     public static void markTaskIncomplete(Scanner scanner) {
         boolean notConfirmed = true;
         boolean notMarkedIncomplete = true;
 
-        if ( tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There are no valid tasks to mark incomplete.");
             return;
         }
@@ -429,11 +435,9 @@ public class TaskManager {
             }
 
             while (notConfirmed) {
-
                 if (taskToMarkIncomplete == -1) {
                     return;
                 }
-
 
                 try {
                     System.out.print("is the task you would like to mark incomplete \"" + tasks.get(taskToMarkIncomplete) + "\" (true or false): ");
@@ -444,7 +448,7 @@ public class TaskManager {
 
                 try {
                     if (scanner.nextBoolean()) {
-                        tasks.get(taskToMarkIncomplete).done = false;
+                        tasks.get(taskToMarkIncomplete).done = false; // Set done to false
                         notMarkedIncomplete = false;
                         notConfirmed = false;
                         System.out.println("The task has been successfully marked incomplete");
@@ -457,9 +461,9 @@ public class TaskManager {
                 }
             }
         }
-
     }
 
+    // Bulk delete based on completion status
     public static void deleteAllCompletedOrIncompleteTasks(Scanner scanner, boolean choice) {
         boolean done  = false;
         System.out.print("Are you sure(true or false): ");
@@ -468,6 +472,7 @@ public class TaskManager {
             if (scanner.hasNextBoolean()) {
                 if (scanner.nextBoolean()) {
                     scanner.nextLine();
+                    // Lambda function: remove if i.done matches the choice (true or false)
                     tasks.removeIf(i -> i.done == choice);
                     done = true;
                     System.out.println("All Completed tasks have been deleted.");
@@ -482,6 +487,7 @@ public class TaskManager {
         }
     }
 
+    // Clears the entire list
     public static void deleteAllTasks(Scanner scanner) {
         boolean done  = false;
         System.out.print("Are you sure(true or false): ");
@@ -490,7 +496,7 @@ public class TaskManager {
             if (scanner.hasNextBoolean()) {
                 if (scanner.nextBoolean()) {
                     scanner.nextLine();
-                    tasks.clear();
+                    tasks.clear(); // Wipe list
                     done = true;
                     System.out.println("All tasks have been deleted.");
                 }

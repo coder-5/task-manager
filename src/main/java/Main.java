@@ -4,10 +4,12 @@ void main() {
 
     Scanner scanner = new Scanner(System.in);
     int choice;
-    String[] choiceArray;
+
+    scanner.useDelimiter("\n");
 
     System.out.println("Welcome to the task manager!");
 
+    // Infinite loop for the main menu, only breaks on case 0
     main_loop:
     while (true) {
         System.out.println("\n0. exit");
@@ -21,41 +23,21 @@ void main() {
         System.out.println("8. Mass Delete(sub menu)");
         System.out.print("\nPlease pick an action (enter a number 0 - 8): ");
 
+        // Read input as a line to allow advanced parsing
         if (scanner.hasNextInt()) {
-            choiceArray = scanner.nextLine().split(" ");
+            choice = scanner.nextInt();
         } else {
             System.out.println("\nThat is an invalid input.");
-            scanner.nextLine();
-            continue;
-        }
-        
-        if (choiceArray.length == 1) {
-            choice = Integer.parseInt(choiceArray[0]);
-        } else if (choiceArray.length == 3 && (choiceArray[1].equals("-") || choiceArray[1].equals("+"))) {
-            int choicePt1 = Integer.parseInt(choiceArray[0]);
-            int choicePt2;
-            try {
-                choicePt2 = Integer.parseInt(choiceArray[2]);
-            } catch (NumberFormatException e) {
-                System.out.println("\nThat is an invalid input.");
-                continue;
-            }
-
-            if (choiceArray[1].equals("-")) {
-                choice = choicePt1 - choicePt2;
-            } else {
-                choice = choicePt1 + choicePt2;
-            }
-        } else {
-            System.out.println("\nThat is an invalid input.");
+            scanner.nextLine(); // Clear buffer
             continue;
         }
 
 
+        // Delegate to TaskManager based on the calculated choice
         switch (choice) {
             case 0:
                 System.out.println("Thank You for using the task manager, see you soon");
-                break main_loop;
+                break main_loop; // Exit program
             case 1:
                 TaskManager.addTask(scanner);
                 break;
@@ -63,6 +45,7 @@ void main() {
                 TaskManager.removeTask(scanner);
                 break;
             case 3:
+                // Sub-menu for viewing tasks in different ways
                 System.out.println("0. return to main menu");
                 System.out.println("1. Show all tasks");
                 System.out.println("2. Show incomplete tasks");
@@ -85,10 +68,10 @@ void main() {
                         TaskManager.showTasks(scanner);
                         continue;
                     case 2:
-                        TaskManager.showOnlyCompleteOrIncomplete(scanner, false);
+                        TaskManager.showOnlyCompleteOrIncomplete(scanner, false); // false = incomplete
                         continue;
                     case 3:
-                        TaskManager.showOnlyCompleteOrIncomplete(scanner, true);
+                        TaskManager.showOnlyCompleteOrIncomplete(scanner, true); // true = complete
                         continue;
                     case 4:
                         TaskManager.showCertainPriorityTasks(scanner, 'h');
@@ -116,6 +99,7 @@ void main() {
                 TaskManager.markTaskIncomplete(scanner);
                 break;
             case 8:
+                // Sub-menu for mass deletion
                 System.out.println("0. return to main menu");
                 System.out.println("1. Delete all complete tasks");
                 System.out.println("2. Delete all incomplete tasks");
