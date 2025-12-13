@@ -5,7 +5,6 @@ void main() {
     Scanner scanner = new Scanner(System.in);
     int choice;
 
-    scanner.useDelimiter("\n");
 
     System.out.println("Welcome to the task manager!");
 
@@ -26,6 +25,7 @@ void main() {
         // Read input as a line to allow advanced parsing
         if (scanner.hasNextInt()) {
             choice = scanner.nextInt();
+            scanner.nextLine(); // Clear buffer
         } else {
             System.out.println("\nThat is an invalid input.");
             scanner.nextLine(); // Clear buffer
