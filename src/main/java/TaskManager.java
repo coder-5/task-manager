@@ -67,6 +67,7 @@ public class TaskManager {
             System.out.print("Please enter if it is done or not(true or false): ");
             if (scanner.hasNextBoolean()) {
                 done = scanner.nextBoolean();
+                scanner.nextLine();
                 keepGoing = false;
             } else {
                 scanner.nextLine();
@@ -375,7 +376,13 @@ public class TaskManager {
                         char newPriority = 0;
                         while (newPriority == 0) {
                             System.out.print("Please enter the new priority(h for high, m for medium, l for low, we only look at the first character): ");
-                            newPriority = scanner.nextLine().toLowerCase().charAt(0);
+                            String newPriorityS = scanner.nextLine();
+
+                            if (newPriorityS.isEmpty()) {
+                                System.out.println("That was and invalid priority");
+                            }
+
+                            newPriority = newPriorityS.toLowerCase().charAt(0);
 
                             if (newPriority != 'h' && newPriority != 'm' && newPriority != 'l') {
                                 System.out.println("That was and invalid priority");
